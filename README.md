@@ -1,6 +1,8 @@
 # AngularFileInput
 A simple drag and drop file input for Angular. Currently only supports single file uploads.
 
+The npm package can be found [here](https://www.npmjs.com/package/@nabeelvalley/angularfileinput)
+
 ## Usage
 ### AppModule
 Include the following in your project's NgModule declarations:
