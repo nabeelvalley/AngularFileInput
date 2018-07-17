@@ -1,0 +1,24 @@
+{
+  "name": "fileinput",
+  "version": "1.0.0",
+  "description": "A Simple drag and drop file input for Angular",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nabeelvalley/AngularFileInput.git"
+  },
+  "keywords": [
+    "file",
+    "upload",
+    "angular"
+  ],
+  "author": "Nabeel Valley <nabeelvalley1@hotmail.com> (https://github.com/nabeelvalley/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nabeelvalley/AngularFileInput/issues"
+  },
+  "homepage": "https://github.com/nabeelvalley/AngularFileInput#readme"
+}
