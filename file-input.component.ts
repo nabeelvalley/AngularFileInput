@@ -3,8 +3,6 @@ import {
   OnInit,
   EventEmitter,
   Output,
-  ViewChild,
-  Injector,
   Input
 } from "@angular/core";
 
@@ -15,8 +13,8 @@ import {
 })
 export class FileInput implements OnInit {
   @Input('displayText') displayText : string = "Click or Drag to Upload a File";
-  @Output() fileMeta = new EventEmitter<File>();
-  @Output() fileData = new EventEmitter<Uint8Array>();
+  @Output() fileMetaSet = new EventEmitter<File>();
+  @Output() fileDataSet = new EventEmitter<Uint8Array>();
 
   constructor() {}
 
@@ -37,7 +35,6 @@ export class FileInput implements OnInit {
 
     dropzone.ondragover = event => {
       event.preventDefault();
-      console.log(event)
     };
 
     dropzone.onclick = event => {
@@ -66,7 +63,6 @@ export class FileInput implements OnInit {
       event.preventDefault();
       event.dataTransfer.dropEffect = "all";
       event.dataTransfer.effectAllowed = "all";
-      console.log(event.dataTransfer.files);
 
       var file = event.dataTransfer.files[0];
 
@@ -87,9 +83,8 @@ export class FileInput implements OnInit {
     component.appendChild(dropzone);
 
     addEventListener("fileAdded", (event: any) => {
-      console.log(event)
-      this.fileMeta.emit(event.detail.file);
-      this.fileData.emit(event.detail.data);
+      this.fileMetaSet.emit(event.detail.file);
+      this.fileDataSet.emit(event.detail.data);
     });
   }
 }
