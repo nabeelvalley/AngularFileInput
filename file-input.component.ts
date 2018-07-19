@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  EventEmitter,
-  Output,
-  Input
-} from "@angular/core";
+import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
 
 @Component({
   selector: "file-input",
@@ -12,43 +6,39 @@ import {
   styleUrls: ["./file-input.component.css"]
 })
 export class FileInput implements OnInit {
-  @Input('accepts') accepts : string = "*";
-  @Input('displayText') displayText : string = "Click or Drag to Upload a File";
+  @Input("accepts") accepts: string = "*";
+  @Input("displayText") displayText: string = "Click or Drag to Upload a File";
+  @Input("styles")
+  styles: string =
+    "height : 100px; width : 100%; padding : 20px; margin-bottom :20px; text-align : center; text-justify : center; background-color : rgb(230, 230, 230)";
   @Output() fileMetaSet = new EventEmitter<File>();
   @Output() fileDataSet = new EventEmitter<Uint8Array>();
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     let component = document.querySelector("#file_upload");
-    let dropzone = document.createElement("div");
-    dropzone.id = "file_input";
-    dropzone.classList.add("file_input");
-    dropzone.innerText = this.displayText
-    dropzone.style.height = "100px";
-    dropzone.style.width = "100%";
-    dropzone.style.padding = "20px";
-    dropzone.style.marginBottom = "20px";
-    dropzone.style.textAlign = "center";
-    dropzone.style.textJustify = "center";
-    dropzone.style.backgroundColor = "rgb(230, 230, 230)";
+    let uploadArea = document.createElement("div");
+    uploadArea.id = "file_input";
+    uploadArea.classList.add("file_input");
+    uploadArea.innerText = this.displayText;
+    uploadArea.setAttribute("style", this.styles);
 
-
-    dropzone.ondragover = event => {
+    uploadArea.ondragover = event => {
       event.preventDefault();
     };
 
-    dropzone.onclick = event => {
-      let fileInput = <HTMLInputElement> document.querySelector("#file_dialog");
+    uploadArea.onclick = event => {
+      let fileInput = <HTMLInputElement>document.querySelector("#file_dialog");
       fileInput.click();
       fileInput.onchange = event => {
         var file = fileInput.files[0];
-      
+
         var reader = new FileReader();
-        reader.onload = function() {
+        reader.onload = function () {
           var arrayBuffer = this.result;
           var array = new Uint8Array(arrayBuffer);
-  
+
           var event: Event = new CustomEvent("fileAdded", {
             bubbles: true,
             detail: { file: file, data: array }
@@ -59,7 +49,7 @@ export class FileInput implements OnInit {
       };
     };
 
-    dropzone.ondrop = event => {
+    uploadArea.ondrop = event => {
       let dropzone = document.querySelector("#file_input");
       event.preventDefault();
       event.dataTransfer.dropEffect = "all";
@@ -68,7 +58,7 @@ export class FileInput implements OnInit {
       var file = event.dataTransfer.files[0];
 
       var reader = new FileReader();
-      reader.onload = function() {
+      reader.onload = function () {
         var arrayBuffer = this.result;
         var array = new Uint8Array(arrayBuffer);
 
@@ -81,7 +71,7 @@ export class FileInput implements OnInit {
       reader.readAsArrayBuffer(file);
     };
 
-    component.appendChild(dropzone);
+    component.appendChild(uploadArea);
 
     addEventListener("fileAdded", (event: any) => {
       this.fileMetaSet.emit(event.detail.file);

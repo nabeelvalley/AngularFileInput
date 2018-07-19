@@ -19,11 +19,19 @@ Include the following in your project's NgModule declarations:
 
 ## File Input Component
 ### Input
-The Component has two inputs, one for the accepted file types and the other for the display text, which are by default set to "*", and "Click or Drag to Upload a File" respectively.
+The Component has two main inputs, one for the accepted file types and the other for the display text, which are by default set to "*", and "Click or Drag to Upload a File" respectively.
 
 ```typescript
   @Input('accepts') accepts : string = "*";
   @Input('displayText') displayText : string = "Click or Drag to Upload a File";
+```
+
+Alternatively the styling on the component can be passed in by means of an HTML inline style set as the following input: 
+
+```
+  @Input("styles")
+  styles: string =
+    "height : 100px; width : 100%; padding : 20px;";
 ```
 
 ### Outputs
