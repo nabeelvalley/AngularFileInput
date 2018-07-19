@@ -12,6 +12,7 @@ import {
   styleUrls: ["./file-input.component.css"]
 })
 export class FileInput implements OnInit {
+  @Input('accepts') accepts : string = "*";
   @Input('displayText') displayText : string = "Click or Drag to Upload a File";
   @Output() fileMetaSet = new EventEmitter<File>();
   @Output() fileDataSet = new EventEmitter<Uint8Array>();
