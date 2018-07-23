@@ -14,7 +14,7 @@ export class FileInput implements OnInit {
   @Output() fileMetaSet = new EventEmitter<File>();
   @Output() fileDataSet = new EventEmitter<Uint8Array>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     let component = document.querySelector("#file_upload");
@@ -32,20 +32,24 @@ export class FileInput implements OnInit {
       let fileInput = <HTMLInputElement>document.querySelector("#file_dialog");
       fileInput.click();
       fileInput.onchange = event => {
-        var file = fileInput.files[0];
+        if (fileInput.files.length > 0) {
+          var file = fileInput.files[0];
 
-        var reader = new FileReader();
-        reader.onload = function () {
-          var arrayBuffer = this.result;
-          var array = new Uint8Array(arrayBuffer);
+          var reader = new FileReader();
+          reader.onload = function() {
+            var arrayBuffer = this.result;
+            var array = new Uint8Array(arrayBuffer);
 
-          var event: Event = new CustomEvent("fileAdded", {
-            bubbles: true,
-            detail: { file: file, data: array }
-          });
-          dispatchEvent(event);
-        };
-        reader.readAsArrayBuffer(file);
+            var event: Event = new CustomEvent("fileAdded", {
+              bubbles: true,
+              detail: { file: file, data: array }
+            });
+            dispatchEvent(event);
+          };
+          reader.readAsArrayBuffer(file);
+        } else {
+          console.log("User cancelled file Upload");
+        }
       };
     };
 
@@ -58,7 +62,7 @@ export class FileInput implements OnInit {
       var file = event.dataTransfer.files[0];
 
       var reader = new FileReader();
-      reader.onload = function () {
+      reader.onload = function() {
         var arrayBuffer = this.result;
         var array = new Uint8Array(arrayBuffer);
 

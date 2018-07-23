@@ -1,6 +1,6 @@
 {
   "name": "@nabeelvalley/angularfileinput",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A Simple drag and drop file input for Angular",
   "main": "index.js",
   "scripts": {
