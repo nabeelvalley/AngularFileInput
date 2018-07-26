@@ -76,7 +76,6 @@ export class FileInput implements AfterViewInit {
     };
 
     addEventListener( id + "fileAdded", (event: any) => {
-      console.log(this.id, event)
       this.fileMetaSet.emit(event.detail.file);
       this.fileDataSet.emit(event.detail.data);
     });
