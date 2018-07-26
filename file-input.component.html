@@ -1,4 +1,6 @@
-<input id="file_dialog" type="file" accept="{{accepts}}" style="display: none" />
-<div id="file_upload">
-
+<input id="{{ id + 'dialog'}}" type="file" accept="{{accepts}}" style="display: none" />
+<div id="{{ id + 'upload'}}">
+  <div id="{{ id }}" class="file_input">
+    {{ displayText }}
+  </div>
 </div>
