@@ -1,12 +1,13 @@
-import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
+import { Component, AfterViewInit, EventEmitter, Output, Input } from "@angular/core";
 
 @Component({
   selector: "file-input",
   templateUrl: "./file-input.component.html",
   styleUrls: ["./file-input.component.css"]
 })
-export class FileInput implements OnInit {
+export class FileInput implements AfterViewInit {
   @Input("accepts") accepts: string = "*";
+  @Input("id") id: string = "file_input"
   @Input("displayText") displayText: string = "Click or Drag to Upload a File";
   @Input("styles")
   styles: string =
@@ -16,12 +17,11 @@ export class FileInput implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    let component = document.querySelector("#file_upload");
-    let uploadArea = document.createElement("div");
-    uploadArea.id = "file_input";
-    uploadArea.classList.add("file_input");
-    uploadArea.innerText = this.displayText;
+  ngAfterViewInit() {
+    var id = this.id;
+    let component = document.getElementById(this.id + "upload");
+
+    let uploadArea = document.getElementById(this.id);
     uploadArea.setAttribute("style", this.styles);
 
     uploadArea.ondragover = event => {
@@ -29,7 +29,7 @@ export class FileInput implements OnInit {
     };
 
     uploadArea.onclick = event => {
-      let fileInput = <HTMLInputElement>document.querySelector("#file_dialog");
+      let fileInput = <HTMLInputElement>document.getElementById(this.id + "dialog");
       fileInput.click();
       fileInput.onchange = event => {
         if (fileInput.files.length > 0) {
@@ -40,7 +40,7 @@ export class FileInput implements OnInit {
             var arrayBuffer = this.result;
             var array = new Uint8Array(arrayBuffer);
 
-            var event: Event = new CustomEvent("fileAdded", {
+            var event: Event = new CustomEvent( id + "fileAdded", {
               bubbles: true,
               detail: { file: file, data: array }
             });
@@ -54,7 +54,7 @@ export class FileInput implements OnInit {
     };
 
     uploadArea.ondrop = event => {
-      let dropzone = document.querySelector("#file_input");
+      let dropzone = document.getElementById(this.id);
       event.preventDefault();
       event.dataTransfer.dropEffect = "all";
       event.dataTransfer.effectAllowed = "all";
@@ -66,7 +66,7 @@ export class FileInput implements OnInit {
         var arrayBuffer = this.result;
         var array = new Uint8Array(arrayBuffer);
 
-        var event: Event = new CustomEvent("fileAdded", {
+        var event: Event = new CustomEvent( id + "fileAdded", {
           bubbles: true,
           detail: { file: file, data: array }
         });
@@ -75,9 +75,8 @@ export class FileInput implements OnInit {
       reader.readAsArrayBuffer(file);
     };
 
-    component.appendChild(uploadArea);
-
-    addEventListener("fileAdded", (event: any) => {
+    addEventListener( id + "fileAdded", (event: any) => {
+      console.log(this.id, event)
       this.fileMetaSet.emit(event.detail.file);
       this.fileDataSet.emit(event.detail.data);
     });
