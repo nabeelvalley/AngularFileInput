@@ -51,6 +51,9 @@ The Component should be included in the HTML for the parent component with an ac
 <file-input [id]="filepicker1"  [accepts]="'image/*'" (fileDataSet)="setfileDataSet($event)" (fileMetaSet)="setfileMetaSet($event)"></file-input>
 ```
 
+### Typescript
+You can define your event handlers as follows:
+
 ```typescript
   setfileMetaSet(event: File){
     this.fileMeta = event;
