@@ -19,11 +19,12 @@ Include the following in your project's NgModule declarations:
 
 ## File Input Component
 ### Input
-The Component has two main inputs, one for the accepted file types and the other for the display text, which are by default set to "*", and "Click or Drag to Upload a File" respectively.
+The Component has three main inputs, one for the accepted file types, another for the display text, which are by default set to "\*", and "Click or Drag to Upload a File" respectively, and lastly an id input that is necessary if you plan to use this multiple times on a single page - it is important for this value to be unique
 
 ```typescript
   @Input('accepts') accepts : string = "*";
   @Input('displayText') displayText : string = "Click or Drag to Upload a File";
+  @Input("id") id: string = "file_input"
 ```
 
 Alternatively the styling on the component can be passed in by means of an HTML inline style set as the following input: 
@@ -47,7 +48,7 @@ The Component has two output events, the File Metadata as a `File` and the File 
 The Component should be included in the HTML for the parent component with an accepted file type and event handlers for the `fileDataSetSet` and `fileMetaSetSet` events.
 
 ```html
-<file-input [accepts]="'image/*'" (fileDataSet)="setfileDataSet($event)" (fileMetaSet)="setfileMetaSet($event)"></file-input>
+<file-input [id]="filepicker1"  [accepts]="'image/*'" (fileDataSet)="setfileDataSet($event)" (fileMetaSet)="setfileMetaSet($event)"></file-input>
 ```
 
 ```typescript
